@@ -1,0 +1,11 @@
+{
+  "name": "socket-chat-example",
+  "version": "0.0.1",
+  "description": "my first socket.io app",
+  "type": "commonjs",
+  "dependencies": {
+    "cloudflared": "^0.7.1",
+    "express": "^4.22.1",
+    "socket.io": "^4.8.1"
+  }
+}
