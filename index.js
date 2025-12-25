@@ -13,16 +13,22 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    if( !(socket.id in players) ){
-      players[socket.id] = {
-          x: 0,
-          y: 0
-      }
+  socket.emit('existing players', players) 
+  if( !(socket.id in players) ){
+    players[socket.id] = {
+        x: 0,
+        y: 0
     }
-
+  }
+  
+  
   socket.on('position', (position) => {
     players[socket.id] = position
   });
+  socket.on('disconnect', () => {
+      delete players[socket.id];
+      socket.broadcast.emit('player disconnect', socket.id);
+  })
 });
 setInterval(()=>{
   io.emit("position" ,players)
