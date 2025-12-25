@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  io.emit("position" ,players)
   socket.emit('existing players', players) 
   if( !(socket.id in players) ){
     players[socket.id] = {
@@ -20,7 +21,7 @@ io.on('connection', (socket) => {
         y: 0
     }
   }
-  
+  socket.broadcast.emit("new player" ,socket.id)
   
   socket.on('position', (position) => {
     players[socket.id] = position
